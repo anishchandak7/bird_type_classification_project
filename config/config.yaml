@@ -2,6 +2,6 @@ artifacts_root: artifacts
 
 data_ingestion:
   root_dir: artifacts/data_ingestion
-  source_URL: https://www.kaggle.com/datasets/gpiosenka/100-bird-species/download?datasetVersionNumber=65
-  local_data_file: artifacts/data_ingestion/data.zip
+  source_url: gpiosenka/100-bird-species
+  local_data_file: artifacts/data_ingestion
   unzip_dir: artifacts/data_ingestion

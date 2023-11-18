@@ -1,5 +1,6 @@
 tensorflow
-pandas 
+pandas
+kaggle 
 dvc
 notebook
 numpy
