@@ -53,3 +53,16 @@ class TrainingConfig:
     params_is_augmentation: bool
     params_image_size: list
     params_acceptable_classes: list
+
+@dataclass(frozen=True)
+class EvaluationConfig:
+    """
+    This class will help in reading configurations from config.yaml and params.yaml files for evaluation.
+    """
+    path_of_model: Path
+    training_data: Path
+    test_data:Path
+    all_params: dict
+    params_image_size: list
+    params_batch_size: int
+    params_acceptable_classes:list

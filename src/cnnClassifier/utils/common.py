@@ -4,11 +4,12 @@
 import os
 # Third-party imports
 from pathlib import Path
+import random
+import json
 from ensure import ensure_annotations
 from box.exceptions import BoxValueError
 from box import ConfigBox
 import yaml
-import random
 import pandas as pd
 # Local application/library specific imports
 from cnnClassifier import logger
@@ -78,3 +79,16 @@ def generate_dataframe(folder_path: Path|str, classes:list, verbose = False):
     df = df[df['label'].isin(classes)]
 
     return df
+
+@ensure_annotations
+def save_json(path: Path, data: dict):
+    """save json data
+
+    Args:
+        path (Path): path to json file
+        data (dict): data to be saved in json file
+    """
+    with open(path, "w") as f:
+        json.dump(data, f, indent=4)
+
+    logger.info("json file saved at: %s", path)
