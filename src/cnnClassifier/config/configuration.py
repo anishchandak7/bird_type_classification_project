@@ -1,7 +1,8 @@
 """This file contains ConfigurationManager Class"""
+from pathlib import Path
 from cnnClassifier.constants import CONFIG_FILE_PATH, PARAMS_FILE_PATH
 from cnnClassifier.utils.common import read_yaml, create_directories
-from cnnClassifier.entity.config_entity import DataIngestionConfig
+from cnnClassifier.entity.config_entity import DataIngestionConfig, PrepareBaseModelConfig
 
 class ConfigurationManager:
     """class which manages configurations for all the steps of the project."""
@@ -28,4 +29,31 @@ class ConfigurationManager:
                             source_url=data_ingestion_config.source_url,
                             local_data_file=data_ingestion_config.local_data_file,
                             unzip_dir=data_ingestion_config.unzip_dir)
+
+    def get_prepare_base_model_config(self) -> PrepareBaseModelConfig:
+        """
+        Encasulates base model configurations from config.yaml and params.yaml file.
+
+        Returns:
+            PrepareBaseModelConfig Object
+        """
+        config = self.config.prepare_base_model
+        # Creates prepare_base_model folder inside artifacts folder.
+        create_directories([config.root_dir])
+
+        # Data encapsulation into PrepareBaseModelConfig Class.
+        prepare_base_model_config = PrepareBaseModelConfig(
+            root_dir=Path(config.root_dir),
+            base_model_path=Path(config.base_model_path),
+            updated_base_model_path=Path(config.updated_base_model_path),
+            params_image_size=self.params.IMAGE_SIZE,
+            params_learning_rate=self.params.LEARNING_RATE,
+            params_include_top=self.params.INCLUDE_TOP,
+            params_weights=self.params.WEIGHTS,
+            params_classes=self.params.CLASSES,
+            params_acceptable_classes=self.params.ACCEPTABLE_CLASSES,
+            params_pooling=self.params.POOLING
+        )
+
+        return prepare_base_model_config
     

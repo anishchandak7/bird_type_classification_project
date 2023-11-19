@@ -1,6 +1,7 @@
 tensorflow
 pandas
-kaggle 
+kaggle
+scikit-learn
 dvc
 notebook
 numpy
