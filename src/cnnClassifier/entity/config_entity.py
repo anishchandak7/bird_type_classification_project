@@ -28,3 +28,12 @@ class PrepareBaseModelConfig:
     params_classes: int
     params_acceptable_classes: list
     params_pooling: str
+
+@dataclass(frozen=True)
+class PrepareCallbacksConfig:
+    """
+    This class will help in reading configurations from config.yaml file for callbacks.
+    """
+    root_dir: Path
+    tensorboard_root_log_dir: Path
+    checkpoint_model_filepath: Path
