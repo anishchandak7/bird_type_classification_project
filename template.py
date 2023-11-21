@@ -28,7 +28,8 @@ project_files_list = [
     "params.yaml",
     "requirements.txt",
     "setup.py",
-    "research/trials.ipynb"
+    "research/trials.ipynb",
+    ".kaggle/kaggle.json"
 ]
 
 def generate_folder_structure():

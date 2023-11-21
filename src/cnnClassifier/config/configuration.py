@@ -11,9 +11,9 @@ from cnnClassifier.entity.config_entity import (DataIngestionConfig,
 
 class ConfigurationManager:
     """class which manages configurations for all the steps of the project."""
-    def __init__(self, 
+    def __init__(self,
                  config_file_path = CONFIG_FILE_PATH,
-                 params_file_path = PARAMS_FILE_PATH) -> None:       
+                 params_file_path = PARAMS_FILE_PATH) -> None:
         self.config = read_yaml(config_file_path)
         self.params = read_yaml(params_file_path)
 
