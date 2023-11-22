@@ -1,0 +1,145 @@
+schema: '2.0'
+stages:
+  data_ingestion:
+    cmd: python src/cnnClassifier/pipeline/data_ingestion_pipeline.py
+    deps:
+    - path: .kaggle/kaggle.json
+      hash: md5
+      md5: f5bf9f511b90f7c1e29ee5893c7729e0
+      size: 69
+    - path: config/config.yaml
+      hash: md5
+      md5: a20023b667bed010e02850d3074162d5
+      size: 733
+    - path: src/cnnClassifier/pipeline/data_ingestion_pipeline.py
+      hash: md5
+      md5: 89d88811b60b51a23c4df40d13b4f75b
+      size: 1030
+    outs:
+    - path: artifacts/data_ingestion
+      hash: md5
+      md5: 6e0957b2b0c39347c4a9d3bc3567ab1f.dir
+      size: 2114150222
+      nfiles: 89887
+  prepare_base_model:
+    cmd: python src/cnnClassifier/pipeline/prepare_base_model_pipeline.py
+    deps:
+    - path: config/config.yaml
+      hash: md5
+      md5: a20023b667bed010e02850d3074162d5
+      size: 733
+    - path: src/cnnClassifier/pipeline/prepare_base_model_pipeline.py
+      hash: md5
+      md5: 4c70494624b4e0e790ddacbad21d0420
+      size: 1247
+    params:
+      params.yaml:
+        ACCEPTABLE_CLASSES:
+        - ALBATROSS
+        - ANTBIRD
+        - BOBOLINK
+        - COCKATOO
+        - CROW
+        CLASSES: 5
+        IMAGE_SIZE:
+        - 224
+        - 224
+        - 3
+        INCLUDE_TOP: false
+        LEARNING_RATE: 0.001
+        POOLING: max
+        WEIGHTS: imagenet
+    outs:
+    - path: artifacts/prepare_base_model
+      hash: md5
+      md5: ad047f3fc0e1f8ad1291f56884c1804e.dir
+      size: 34841592
+      nfiles: 2
+  training:
+    cmd: python src/cnnClassifier/pipeline/training_pipeline.py
+    deps:
+    - path: artifacts/data_ingestion/train
+      hash: md5
+      md5: 3abeb5de6c11c8f7e3ff375acb01f3ab.dir
+      size: 1908363255
+      nfiles: 84635
+    - path: artifacts/data_ingestion/valid
+      hash: md5
+      md5: cf59c8eb92df95dec535fc7100df9f02.dir
+      size: 60503881
+      nfiles: 2625
+    - path: artifacts/prepare_base_model
+      hash: md5
+      md5: ad047f3fc0e1f8ad1291f56884c1804e.dir
+      size: 34841592
+      nfiles: 2
+    - path: config/config.yaml
+      hash: md5
+      md5: a20023b667bed010e02850d3074162d5
+      size: 733
+    - path: src/cnnClassifier/components/prepare_callbacks.py
+      hash: md5
+      md5: c8245b4bd6400919251bb5ddd8e82ee6
+      size: 1127
+    - path: src/cnnClassifier/pipeline/training_pipeline.py
+      hash: md5
+      md5: c1a9aeffd2a8d3b525dbef713e84879c
+      size: 1514
+    params:
+      params.yaml:
+        ACCEPTABLE_CLASSES:
+        - ALBATROSS
+        - ANTBIRD
+        - BOBOLINK
+        - COCKATOO
+        - CROW
+        AUGMENTATION: true
+        BATCH_SIZE: 32
+        EPOCHS: 5
+        IMAGE_SIZE:
+        - 224
+        - 224
+        - 3
+    outs:
+    - path: artifacts/training/model.h5
+      hash: md5
+      md5: f3c2df97a5c6676678f5af2c7c449e60
+      size: 20647904
+  evaluation:
+    cmd: python src/cnnClassifier/pipeline/evaluation_pipeline.py
+    deps:
+    - path: artifacts/data_ingestion/test
+      hash: md5
+      md5: 9352456c34568fd77a939d9a3bca6a53.dir
+      size: 60855841
+      nfiles: 2625
+    - path: artifacts/training/model.h5
+      hash: md5
+      md5: f3c2df97a5c6676678f5af2c7c449e60
+      size: 20647904
+    - path: config/config.yaml
+      hash: md5
+      md5: a20023b667bed010e02850d3074162d5
+      size: 733
+    - path: src/cnnClassifier/pipeline/evaluation_pipeline.py
+      hash: md5
+      md5: 214267b1e76531bb585e41094e64fcac
+      size: 1040
+    params:
+      params.yaml:
+        ACCEPTABLE_CLASSES:
+        - ALBATROSS
+        - ANTBIRD
+        - BOBOLINK
+        - COCKATOO
+        - CROW
+        BATCH_SIZE: 32
+        IMAGE_SIZE:
+        - 224
+        - 224
+        - 3
+    outs:
+    - path: scores.json
+      hash: md5
+      md5: ecdd072114822b62e8a303bb938a2fcb
+      size: 73

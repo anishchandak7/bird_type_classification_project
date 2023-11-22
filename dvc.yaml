@@ -6,7 +6,8 @@ stages:
       - config/config.yaml
       - .kaggle/kaggle.json
     outs:
-      - artifacts/data_ingestion
+      - artifacts/data_ingestion:
+          cache: false
 
 
   prepare_base_model:
