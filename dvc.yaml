@@ -20,6 +20,8 @@ stages:
       - CLASSES
       - WEIGHTS
       - LEARNING_RATE
+      - ACCEPTABLE_CLASSES
+      - POOLING
     outs:
       - artifacts/prepare_base_model
 
@@ -32,12 +34,14 @@ stages:
       - src/cnnClassifier/components/prepare_callbacks.py
       - config/config.yaml
       - artifacts/data_ingestion/train
+      - artifacts/data_ingestion/valid
       - artifacts/prepare_base_model
     params:
       - IMAGE_SIZE
       - EPOCHS
       - BATCH_SIZE
       - AUGMENTATION
+      - ACCEPTABLE_CLASSES
     outs:
       - artifacts/training/model.h5
 
@@ -49,11 +53,12 @@ stages:
     deps:
       - src/cnnClassifier/pipeline/evaluation_pipeline.py
       - config/config.yaml
-      - artifacts/data_ingestion/Chicken-fecal-images
+      - artifacts/data_ingestion/test
       - artifacts/training/model.h5
     params:
       - IMAGE_SIZE
       - BATCH_SIZE
+      - ACCEPTABLE_CLASSES
     metrics:
     - scores.json:
         cache: false

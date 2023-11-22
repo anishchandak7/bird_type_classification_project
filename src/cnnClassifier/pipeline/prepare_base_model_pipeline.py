@@ -20,3 +20,11 @@ class PrepareBaseModelPipeline:
         prepare_base_model.update_base_model()
         logger.info("Updated model saved successfully.")
         logger.info("%s completed successfully.", STAGE_NAME)
+
+if __name__ == '__main__':
+    try:
+        base_model_prep_object = PrepareBaseModelPipeline()
+        base_model_prep_object.initiate()
+    except Exception as e:
+        logger.exception(e)
+        raise e

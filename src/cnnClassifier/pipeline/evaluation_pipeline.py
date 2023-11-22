@@ -21,3 +21,11 @@ class EvaluationPipeline:
         score = evaluation.evaluation()
         evaluation.save_score(score)
         logger.info("%s completed successfully.", STAGE_NAME)
+
+if  __name__ == '__main__':
+    try:
+        evaluation_object = EvaluationPipeline()
+        evaluation_object.start()
+    except Exception as e:
+        logger.exception(e)
+        raise e

@@ -30,3 +30,11 @@ class TrainingPipeline:
             callback_list=callback_list
         )
         logger.info("%s completed successfully.", STAGE_NAME)
+    
+if __name__ == '__main__':
+    try:
+        training_object = TrainingPipeline()
+        training_object.begin()
+    except Exception as e:
+        logger.exception(e)
+        raise e
