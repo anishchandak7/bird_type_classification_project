@@ -66,3 +66,10 @@ class EvaluationConfig:
     params_image_size: list
     params_batch_size: int
     params_acceptable_classes:list
+
+@dataclass(frozen=True)
+class PredictionConfig:
+    """
+    This class will help in reading configurations from config.yaml and params.yaml files for prediction.
+    """
+    params_acceptable_classes:list

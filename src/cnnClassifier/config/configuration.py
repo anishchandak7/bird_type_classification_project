@@ -7,7 +7,8 @@ from cnnClassifier.entity.config_entity import (DataIngestionConfig,
                                                 PrepareBaseModelConfig,
                                                 PrepareCallbacksConfig,
                                                 TrainingConfig,
-                                                EvaluationConfig)
+                                                EvaluationConfig,
+                                                PredictionConfig)
 
 class ConfigurationManager:
     """class which manages configurations for all the steps of the project."""
@@ -132,3 +133,15 @@ class ConfigurationManager:
             params_batch_size=self.params.BATCH_SIZE
         )
         return eval_config
+    
+    def get_prediction_config(self) -> PredictionConfig:
+        """
+        Encapsulates prediction configuration from config.yaml file.
+
+        Returns:
+            PredictionConfig: object
+        """
+        prediction_config = PredictionConfig(
+            params_acceptable_classes=self.params.ACCEPTABLE_CLASSES
+        )
+        return prediction_config

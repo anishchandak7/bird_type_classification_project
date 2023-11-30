@@ -3,6 +3,7 @@
 # standard imports
 import os
 # Third-party imports
+import base64
 from pathlib import Path
 import random
 import json
@@ -88,7 +89,34 @@ def save_json(path: Path, data: dict):
         path (Path): path to json file
         data (dict): data to be saved in json file
     """
-    with open(path, "w") as f:
+    with open(path, "w", encoding='utf-8') as f:
         json.dump(data, f, indent=4)
 
     logger.info("json file saved at: %s", path)
+
+
+def decode_image(img_string, file_name):
+    """
+    decode image from base64 string
+
+    Args:
+        img_string (_type_): _description_
+        file_name (_type_): _description_
+    """
+    img_data = base64.b64decode(img_string)
+    with open(file_name, 'wb') as f:
+        f.write(img_data)
+
+
+def encode_image_into_base64(cropped_image_path):
+    """
+    encode image into base64 string
+
+    Args:
+        cropped_image_path (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
+    with open(cropped_image_path, "rb") as f:
+        return base64.b64encode(f.read())
